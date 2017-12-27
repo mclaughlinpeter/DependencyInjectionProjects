@@ -6,8 +6,10 @@ namespace DependencyInjection.Controllers
 {
     public class HomeController : Controller
     {
-        public IRepository Repository { get; } = TypeBroker.Repository;
+        private IRepository repository;
+
+        public HomeController(IRepository repo) => repository = repo;
         
-        public ViewResult Index() => View(Repository.Products);
+        public ViewResult Index() => View(repository.Products);
     }
 }

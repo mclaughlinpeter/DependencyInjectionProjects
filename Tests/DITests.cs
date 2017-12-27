@@ -13,16 +13,21 @@ namespace Tests
         public void ControllerTest()
         {
             // Arrange
-            var data = new[] { new Product { Name = "Test", Price = 100 } };
-            var mock = new Mock<IRepository>();
-            mock.SetupGet(m => m.Products).Returns(data);
-            HomeController controller = new HomeController(mock.Object);
+            decimal total = 100;
+            var data = new[] { new Product { Name = "Test", Price = total } };
+            var mockIRepository = new Mock<IRepository>();
+            mockIRepository.SetupGet(m => m.Products).Returns(data);
+
+            ProductTotalizer totalizer = new ProductTotalizer(mockIRepository.Object);
+
+            HomeController controller = new HomeController(mockIRepository.Object, totalizer);
 
             // Act
             ViewResult result = controller.Index();
 
             // Assert
             Assert.Equal(data, result.ViewData.Model);
+            Assert.Equal(total, result.ViewData["Total"]);
         }
     }
 }

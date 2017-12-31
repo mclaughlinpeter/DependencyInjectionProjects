@@ -20,10 +20,10 @@ namespace Tests
 
             ProductTotalizer totalizer = new ProductTotalizer(mockIRepository.Object);
 
-            HomeController controller = new HomeController(mockIRepository.Object, totalizer);
+            HomeController controller = new HomeController(mockIRepository.Object);
 
             // Act
-            ViewResult result = controller.Index();
+            ViewResult result = controller.Index(totalizer);
 
             // Assert
             Assert.Equal(data, result.ViewData.Model);

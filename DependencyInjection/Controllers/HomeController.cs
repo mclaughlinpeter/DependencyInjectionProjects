@@ -7,15 +7,13 @@ namespace DependencyInjection.Controllers
     public class HomeController : Controller
     {
         private IRepository repository;
-        private ProductTotalizer totalizer;
 
-        public HomeController(IRepository repo, ProductTotalizer total)
+        public HomeController(IRepository repo)
         {
             repository = repo;
-            totalizer = total;
         }
         
-        public ViewResult Index()
+        public ViewResult Index([FromServices]ProductTotalizer totalizer)
         {
             ViewBag.HomeController = repository.ToString();            
             ViewBag.Totalizer = totalizer.Repository.ToString();
